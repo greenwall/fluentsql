@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+    <name>Fluent SQL</name>
+    <groupId>com.nordea.next</groupId>
+    <artifactId>fluent-sql</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <java.version>1.7</java.version>
+        <next.version>2.7.0</next.version>
+        <slf4j.version>1.7.5</slf4j.version>
+        <log4j.version>1.2.16</log4j.version>
+        <maven.build.timestamp.format>yyyyMMdd-HHmm</maven.build.timestamp.format>
+        <dev.build.timestamp>${maven.build.timestamp}</dev.build.timestamp>
+        <!-- jgitflow setup. Overwritten during release process -->
+		<git.user />
+        <git.password />
+    </properties>
+
+    <!-- Nordea Midas Nexus repository. -->
+    <distributionManagement>
+        <snapshotRepository>
+            <id>next-snapshots</id>
+            <url>https://ninja-nexus.oneadr.net/nexus/content/repositories/next-framework-snapshots/</url>
+        </snapshotRepository>
+        <repository>
+            <id>next</id>
+            <url>https://ninja-nexus.oneadr.net/nexus/content/repositories/next-framework/</url>
+        </repository>
+    </distributionManagement>
+
+    <!-- Stash repository -->
+    <scm>
+        <connection>scm:git:ssh://git@ccd1is0271.ccd1.root4.net:7999/next/next-foundation.git</connection>
+        <url>https://ccd1is0271.ccd1.root4.net:8443/projects/NEXT/repos/next-foundation/</url>
+    </scm>
+
+    <!-- Nordea repositories. -->
+    <repositories>
+        <repository>
+            <id>central</id>
+            <url>https://ninja-nexus.oneadr.net/nexus/content/groups/public</url>
+        </repository>
+        <repository>
+            <id>central-snapshots</id>
+            <url>https://ninja-nexus.oneadr.net/nexus/content/groups/public-snapshots</url>
+        </repository>
+        <repository>
+            <id>next</id>
+            <url>https://ninja-nexus.oneadr.net/nexus/content/repositories/next-framework</url>
+        </repository>
+        <repository>
+            <id>next-snapshots</id>
+            <url>https://ninja-nexus.oneadr.net/nexus/content/repositories/next-framework-snapshots</url>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>central</id>
+            <url>https://ninja-nexus.oneadr.net/nexus/content/groups/public</url>
+        </pluginRepository>
+        <pluginRepository>
+            <id>central-snapshots</id>
+            <url>https://ninja-nexus.oneadr.net/nexus/content/groups/public-snapshots</url>
+        </pluginRepository>
+    </pluginRepositories>
+
+
+    <dependencies>
+        <!-- Logging -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>${log4j.version}</version>
+        </dependency>
+        <!-- Testing -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.11</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>1.10.19</version>
+            <scope>test</scope>
+        </dependency>
+        <!--  Derby embedded database for testing -->
+		<dependency>
+			<groupId>org.apache.derby</groupId>
+			<artifactId>derby</artifactId>
+			<version>10.11.1.1</version>
+			<scope>test</scope>
+		</dependency>
+        <!-- Utility libraries -->
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+            <version>2.2</version>
+        </dependency>
+        <!-- Commons libraries. -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.1</version>
+        </dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.4</version>
+		</dependency>
+        <dependency>
+            <groupId>commons-collections</groupId>
+            <artifactId>commons-collections</artifactId>
+            <version>3.2.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>18.0</version>
+        </dependency>		        
+        <!-- Oracle and Apache commons DBCP datasource -->
+        <dependency>
+            <groupId>commons-dbcp</groupId>
+            <artifactId>commons-dbcp</artifactId>
+            <version>1.4</version>
+        </dependency>
+        <dependency>
+            <groupId>oracle</groupId>
+            <artifactId>oracle-driver</artifactId>
+            <version>10.2.0.4</version>
+        </dependency>
+
+        <dependency>
+        	<groupId>commons-lang</groupId>
+        	<artifactId>commons-lang</artifactId>
+        	<version>2.6</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+        <plugins>
+            <!-- As we are doing "inplace" GWT compilation, ensure the widgetset -->
+            <!-- directory is cleaned properly -->
+            <plugin>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>2.4.1</version>
+                <configuration>
+                    <filesets>
+                        <fileset>
+                            <directory>src/main/webapp/VAADIN/widgetsets</directory>
+                        </fileset>
+                    </filesets>
+                </configuration>
+            </plugin>
+			<plugin>
+				<groupId>org.jvnet.jax-ws-commons</groupId>
+				<artifactId>jaxws-maven-plugin</artifactId>
+				<version>2.3</version>
+				<executions>
+				<!--  Eclipse Keppler m2e connector update site here: https://raw.github.com/trajano/jaxws-maven-connector/master/jaxws-connector-update-site/ -->
+					<execution>
+						<goals>
+							<goal>wsimport</goal>
+						</goals>
+						<configuration>
+							<target>2.1</target>
+  							<bindingDirectory>src/main/resources/webservices</bindingDirectory>							
+							<wsdlDirectory>src/main/resources/webservices</wsdlDirectory>
+							<verbose>true</verbose>
+					        <!-- Needed with JAXP 1.5 -->
+					        <vmArgs>
+					            <vmArg>-Djavax.xml.accessExternalSchema=all</vmArg>
+					        </vmArgs>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.5.1</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.6</version>
+                <configuration>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.18.1</version>
+                <configuration>
+                    <printSummary>false</printSummary>
+                    <redirectTestOutputToFile>true</redirectTestOutputToFile>
+                    <reuseForks>false</reuseForks>
+                    <forkCount>1</forkCount>
+                </configuration>
+            </plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>2.4</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>test-jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<version>1.7</version>
+				<executions>
+					<execution>
+						<id>add-source</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>add-source</goal>
+						</goals>
+						<configuration>
+							<sources>
+								<source>${project.build.directory}/generated-sources/annotations</source>
+								<source>${project.build.directory}/generated-sources/wsimport</source>
+								<source>${project.build.directory}/generated-sources/mappers</source>
+							</sources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+            <!-- Gitflow release plugin to easy releasing with gitflow branch strategy. -->
+			<plugin>
+                <groupId>external.atlassian.jgitflow</groupId>
+                <artifactId>jgitflow-maven-plugin</artifactId>
+                <version>1.0-m5.1</version>
+                <configuration>
+                	<username>${git.user}</username>
+                	<password>${git.password}</password> 
+                    <flowInitContext>
+                        <masterBranchName>master</masterBranchName>
+                        <developBranchName>develop</developBranchName>
+                        <featureBranchPrefix>feature/</featureBranchPrefix>
+                        <releaseBranchPrefix>release/</releaseBranchPrefix>
+                        <hotfixBranchPrefix>hotfix/</hotfixBranchPrefix>
+                    </flowInitContext>
+                    <autoVersionSubmodules>true</autoVersionSubmodules>
+                    <scmCommentPrefix>[jgitflow]</scmCommentPrefix>
+                    <!-- At this stage of gitflow implementation, features, releases and
+                        hotfixes will not be pushed automatically -->
+                    <pushFeatures>true</pushFeatures>
+                    <pushReleases>true</pushReleases>
+                    <pushHotfixes>true</pushHotfixes>
+                    <keepBranch>false</keepBranch>
+                    <allowSnapshots>false</allowSnapshots>
+                    <noDeploy>false</noDeploy>
+                    <!-- <allowUntracked>true</allowUntracked> -->
+                </configuration>
+            </plugin>			
+		</plugins>
+        <pluginManagement>
+            <plugins>
+            <!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+                <plugin>
+                <groupId>org.eclipse.m2e</groupId>
+                <artifactId>lifecycle-mapping</artifactId>
+                <version>1.0.0</version>
+                <configuration>
+                    <lifecycleMappingMetadata>
+                        <pluginExecutions>
+                            <pluginExecution>
+                                <pluginExecutionFilter>
+                                    <groupId>
+                                        org.jvnet.jax-ws-commons
+                                    </groupId>
+                                    <artifactId>
+                                        jaxws-maven-plugin
+                                    </artifactId>
+                                    <versionRange>[2.3,)</versionRange>
+                                    <goals>
+                                        <goal>wsimport</goal>
+                                    </goals>
+                                </pluginExecutionFilter>
+                                <action>
+                                    <execute />
+                                </action>
+                            </pluginExecution>
+                            <pluginExecution>
+                            	<pluginExecutionFilter>
+                            		<groupId>
+                            			org.apache.maven.plugins
+                            		</groupId>
+                            		<artifactId>
+                            			maven-antrun-plugin
+                            		</artifactId>
+                            		<versionRange>[1.7,)</versionRange>
+                            		<goals>
+                            			<goal>run</goal>
+                            		</goals>
+                            	</pluginExecutionFilter>
+                            	<action>
+                                    <execute />
+                            	</action>
+                            </pluginExecution>
+                        </pluginExecutions>
+                    </lifecycleMappingMetadata>
+                </configuration>
+                </plugin>
+            
+            <!-- run mvn assembly:single to generate executable jar with ALL dependencies. This is only to simplify running next tools from console. -->    
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<configuration>
+					<descriptorRefs>
+						<descriptorRef>jar-with-dependencies</descriptorRef>
+					</descriptorRefs>
+					<archive>
+            		  <manifest>
+              			<mainClass>com.nordea.next.console.NextConsole</mainClass>
+      			      </manifest>
+		          	</archive>
+				</configuration>
+				<executions>
+				  <execution>
+					<id>make-assembly</id>
+					<phase>package</phase> 
+					<goals>
+						<goal>single</goal>
+					</goals>
+				  </execution>
+				</executions>
+			</plugin>
+                
+            </plugins>
+        </pluginManagement>
+    </build>
+</project>
+
